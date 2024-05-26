@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        header {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        main {
+            width: 80%;
+            max-width: 1200px;
+            background-color: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #eaeaea;
+            margin: 0.5rem 0;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ request.user.username }}</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Your Purchases:</h2>
+            <ul>
+                {% for purchase in purchases %}
+                    <li>{{ purchase.clothes.name }} - ${{ purchase.clothes.price }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            {% load static %}
+            <a href="/"><img src="{% static 'trolly.png' %}" alt="img" width="50" height="50"></a>
+        </section>
+    </main>
+    <section>
+        <div class="products">
+            {% for cloth in clothes %}
+            <figure class="figure1">
+                <img src="{{ cloth.image.url }}" class="figure-img img-fluid rounded" alt="{{ cloth.name }}">
+                <b>{{ cloth.name }}</b>
+                <figcaption class="figure-caption">
+                    <div>
+                        {{ cloth.description }}
+                        <div class="price">
+                            <strong>${{ cloth.price }}</strong>
+                        </div>
+                    </div>
+                    <form action="{% url 'payment_process'%}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ cloth.pk }}">
+                        <button type="submit" class="btn-buy">
+                            <i class="fas fa-shopping-cart"></i> Buy Now
+                        </button>
+                    </form>
+                </figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+
+
+    </section>
+</body>
+</html>

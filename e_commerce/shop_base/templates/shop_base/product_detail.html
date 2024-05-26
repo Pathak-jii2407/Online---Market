@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ cloth.name }} - Product Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        .product-details {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .price {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .review {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .review-author {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .review-date {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .review-content {
+            margin-bottom: 10px;
+        }
+        .add-review-form {
+            margin-top: 20px;
+        }
+        .add-review-form input[name="author"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .add-review-form textarea[name="review"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height: 100px; /* Adjust the height as needed */
+        }
+        .add-review-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-review-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ cloth.image.url }}" class="product-image img-fluid rounded" alt="{{ cloth.name }}">
+            </div>
+            <div class="col-md-6">
+                <h1>{{ cloth.name }}</h1>
+                <div class="price">
+                    <strong>${{ cloth.price }}</strong>
+                </div>
+                <form action="{% url 'payment_process' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ cloth.id }}">
+                    <button type="submit" class="btn btn-primary btn-buy">
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2>Reviews:</h2>
+            {% if cloth.reviews.all %}
+                {% for review in cloth.reviews.all %}
+                    <div class="review">
+                        <p class="review-author">{{ review.author }}</p>
+                        <p class="review-content">{{ review.content }}</p>
+                        <p class="review-date">{{ review.created_at }}</p>
+
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No reviews yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        <form action="{% url 'product_detail' cloth.id %}" method="post" class="add-review-form">
+            {% csrf_token %}
+            <h2>Add a Review:</h2>
+            <input type="text" name="author" placeholder="Your name" required><br>
+            <textarea name="review" placeholder="Your review" required style="height: 80px;"></textarea><br>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+</body>
+</html>
