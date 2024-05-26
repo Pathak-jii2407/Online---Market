@@ -90,7 +90,7 @@
                     <div>
                         {{ cloth.description }}
                         <div class="price">
-                            <strong>${{ cloth.price }}</strong>
+                            <strong>₹{{ cloth.price }}</strong>
                         </div>
                     </div>
                     <form action="{% url 'product_detail' cloth.pk %}" method="post">
