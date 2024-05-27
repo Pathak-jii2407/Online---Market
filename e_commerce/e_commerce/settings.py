@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-2j*ehf(+ub!tl(ixh2#g=hsdxwa9@cqn+_4_0=)ky!q_5ay7y_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['online-shop-7b6v.onrender.com']
+ALLOWED_HOSTS = ['online-shop-7b6v.onrender.com','127.0.0.1']
 
 
 # Application definition
@@ -74,14 +74,20 @@ WSGI_APPLICATION = "e_commerce.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": "mydatabase",
+#     }
+# }
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "e_commerce_nc3f",
-        "USER": "e_commerce_nc3f_user",
-        "PASSWORD": "ykF85SVBZEaA1h3gTp4BlNPFu1GoyV0y",
-        "HOST": "dpg-cp9sp7tds78s73cnf2v0-a",
+        "NAME": "e_commerce",
+        "USER": "postgres",
+        "PASSWORD": "ved24072003",
+        "HOST": "localhost",
         "PORT": "5432",
     }
 }
