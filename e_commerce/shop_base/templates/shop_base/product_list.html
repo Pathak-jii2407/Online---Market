@@ -93,17 +93,10 @@
                             <strong>₹{{ cloth.price }}</strong>
                         </div>
                     </div>
-                    <form action="{% url 'product_detail' cloth.pk %}" method="post">
-                        {% csrf_token %}
-                        {% if request.user is not none %}
                             <button type="submit" class="btn-buy">
-                               <i class="fas fa-shopping-cart"></i> Buy Now 
+                                <a href="{% url 'product_detail' cloth.pk %}" style="text-decoration:none;">
+                               <i class="fas fa-shopping-cart"></i> Buy Now </a>
                             </button> 
-                        {% else %}
-                            <button type="button" class="btn-buy">
-                                <a href="{% url 'login' %}">Buy Now</a>
-                            </button>
-                        {% endif %}
                     </form>
                     
                 </figcaption>
